@@ -3,7 +3,19 @@ require.extensions['.csv'] = function (module, filename) {
 	module.exports = fs.readFileSync(filename, 'utf8')
 }
 
-const dataName = 'poultry_feed_tank_feed_usage'
+let dataName  
+
+const readline = require('readline').createInterface({
+    input: process.stdin,
+    output: process.stdout
+  })
+  
+  readline.question(`Enter name of CSV to split (do not include file extension)`, (input) => {
+    console.log(`Splitting ${input}...`)
+    dataName = input
+    readline.close()
+  })
+
 const data = require(`./poultry1/${dataName}.csv`)
 function CSVToArray( strData, strDelimiter ){
     strDelimiter = (strDelimiter || ",");
@@ -67,3 +79,4 @@ uniqueIds.forEach(x => {
         )
   })
   
+console.log('Done')
